@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
-import ProductThumbNails from '../../components/ProductThumbNails/ProductThumbNails';
+import { Switch, Route } from 'react-router-dom';
+import FeaturedProducts from './FeaturedProducts/FeaturedProducts';
+import ProductDetails from './ProductDetails/ProductDetails';
 
 class ContextBox extends Component {
     state = {
@@ -8,28 +10,25 @@ class ContextBox extends Component {
     }
 
     onShowDetails = () => {
-        this.setState({showProductList: false})
+        this.setState({ showProductList: false })
     }
 
     render() {
-        let contents = null
-        if (this.state.showProductList) {
-            contents = (<div style={{marginTop:"20px"}}>
-                <h3 style={{marginTop:"20px"}}>Trending In Electronics</h3>
-                <hr style={{backgroundColor: "#007bff"}}></hr>
-                <ProductThumbNails onShowDetails={this.onShowDetails}/>
-                <h3 style={{marginTop:"20px"}}>Trending In Health Care</h3>
-                <hr style={{backgroundColor: "#007bff"}}></hr>
-                <ProductThumbNails onShowDetails={this.onShowDetails}/>
-                <h3 style={{marginTop:"20px"}}>Trending In Clothes</h3>
-                <hr style={{backgroundColor: "#007bff"}}></hr>
-                <ProductThumbNails onShowDetails={this.onShowDetails}/>
-                <h3 style={{marginTop:"20px"}}>Trending In Entertainment</h3>
-                <hr style={{backgroundColor: "#007bff"}}></hr>
-                <ProductThumbNails onShowDetails={this.onShowDetails}/>
-            </div>)
-        }
-        return (<Container fluid>{contents}</Container>)
+        return (
+            <Container fluid>
+                <Switch>
+                    <Route
+                        exact
+                        path="/"
+                        component={FeaturedProducts}
+                    />
+                    <Route
+                        exact
+                        path="/product/:id"
+                        component={ProductDetails}
+                    />
+                </Switch>
+            </Container>)
     }
 }
 
