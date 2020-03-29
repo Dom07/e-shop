@@ -5,19 +5,20 @@ import Axios from 'axios';
 
 class NavBar extends Component {
     state = {
-        Electronics:[],
+        Electronics: [],
         HealthCare: [],
         Clothing: [],
-        Entertainment: []
+        Entertainment: [],
+        subItemActive: false
     }
 
     navItems = ["Electronics", "HealthCare", "Clothing", "Entertainment"]
 
     loadNavSubItems = () => {
         this.navItems.forEach(item => {
-            Axios.get("http://localhost:4000/api/subCategory/"+item,)
+            Axios.get("http://localhost:4000/api/subCategory/" + item)
                 .then(response => {
-                    let oldState = {...this.state}
+                    let oldState = { ...this.state }
                     oldState[item] = response.data.SUCCESS
                     this.setState(oldState)
                 })
@@ -25,20 +26,23 @@ class NavBar extends Component {
         })
     }
 
-    renderSubCategories = (category) =>{
-        if(this.state[category].length > 0){
-            return this.state[category].map(item => <NavDropdown.Item>
-                {item.name}
-            </NavDropdown.Item>)
-        }else{
+    renderSubCategories = (category) => {
+        if (this.state[category].length > 0) {
+            return this.state[category].map(item => 
+            <LinkContainer to={"/product/"+item.name+"/"+item._id} key={item._id}>
+                <NavDropdown.Item  id={item._id} active={this.state.subItemActive}>
+                    {item.name}
+                </NavDropdown.Item>
+            </LinkContainer>)
+        } else {
             return <div>No Items</div>
         }
-    } 
+    }
 
-    renderNavItems = () => this.navItems.map(item => 
-    <NavDropdown title={item} id="basic-nav-dropdown" key={item}>
-        {this.renderSubCategories(item)}
-    </NavDropdown>)
+    renderNavItems = () => this.navItems.map(item =>
+        <NavDropdown title={item} id="basic-nav-dropdown" key={item}>
+            {this.renderSubCategories(item)}
+        </NavDropdown>)
 
     componentDidMount() {
         this.loadNavSubItems();
@@ -57,12 +61,12 @@ class NavBar extends Component {
                             <Button variant="outline-light">Search</Button>
                         </Form>
                         <Nav style={{ marginLeft: "20px" }}>
-                            {(this.state.Electronics.length > 0) ? this.renderNavItems() : "Loading..." }
+                            {(this.state.Electronics.length > 0) ? this.renderNavItems() : "Loading..."}
                         </Nav>
                     </Nav>
                     <Nav>
                         <Nav.Link href="#cart"><i className="fas fa-shopping-cart" style={{ fontSize: "1.5rem" }} ></i></Nav.Link>
-                        <Nav.Link href="#home">Sign In</Nav.Link>
+                        <LinkContainer  to="/login"><Nav.Link>Log In</Nav.Link></LinkContainer>
                     </Nav>
                 </Navbar>
             </div>

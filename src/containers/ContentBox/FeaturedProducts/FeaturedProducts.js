@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ProductThumbNails from '../../../components/ProductThumbNails/ProductThumbNails';
 import FeaturedProduct from './FeaturedProduct/FeaturedProduct';
 
 class FeaturedProducts extends Component {

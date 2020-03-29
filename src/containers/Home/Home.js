@@ -9,7 +9,7 @@ class Home extends Component {
             <div>
                 <Navbar />
                 <ContextBox/>
-                <Footer/>
+                {/* <Footer/> */}
             </div>
         )
     }

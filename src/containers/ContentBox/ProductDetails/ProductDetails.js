@@ -9,7 +9,7 @@ class ProductDetails extends Component {
     }
 
     componentDidMount() {
-        this.loadProduct("5e6bbdbe6215d500177c8c9c")
+        this.loadProduct()
     }
 
     loadProduct = () => {

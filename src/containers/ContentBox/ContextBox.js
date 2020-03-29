@@ -3,6 +3,9 @@ import { Container } from 'react-bootstrap';
 import { Switch, Route } from 'react-router-dom';
 import FeaturedProducts from './FeaturedProducts/FeaturedProducts';
 import ProductDetails from './ProductDetails/ProductDetails';
+import ProductList from './ProductList/ProductList';
+import Login from './LoginPage/Login';
+import Register from './RegisterPage/Register';
 
 class ContextBox extends Component {
     state = {
@@ -24,8 +27,23 @@ class ContextBox extends Component {
                     />
                     <Route
                         exact
+                        path="/login"
+                        component={Login}
+                    />
+                    <Route
+                        exact
+                        path="/register"
+                        component={Register}
+                    />
+                    <Route
+                        exact
                         path="/product/:id"
                         component={ProductDetails}
+                    />
+                    <Route
+                        exact
+                        path="/product/:name/:id"
+                        component={ProductList}
                     />
                 </Switch>
             </Container>)
