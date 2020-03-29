@@ -28,7 +28,7 @@ class ContextBox extends Component {
                     <Route
                         exact
                         path="/login"
-                        component={Login}
+                        render={props => <Login {...props}/>}
                     />
                     <Route
                         exact

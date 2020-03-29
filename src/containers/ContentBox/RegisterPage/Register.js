@@ -1,34 +1,59 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Axios from 'axios';
 
-const Register = (props) => {
-    return (
-        <div className="login" style={{marginTop:"50px"}}>
-            <form className="loginForm">
-                <h3>Register</h3>
-                <div className="form-group">
-                    <label>Name</label>
-                    <input type="text" className="form-control" placeholder="Enter Name" />
-                </div>
-                <div className="form-group">
-                    <label>Address</label>
-                    <input type="text" className="form-control" placeholder="Enter Address" />
-                </div>
-                <div className="form-group">
-                    <label>Phone No</label>
-                    <input type="tel" className="form-control" placeholder="Enter Phone Number" />
-                </div>
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
-                </div>
-                <button type="submit" className="btn btn-primary btn-block">Submit</button>
-            </form>
-        </div>
-    )
+class Register extends Component {
+    state = {
+        name: '',
+        address: '',
+        phoneNo: '',
+        emailId: '',
+        password: ''
+    }
+
+    onChangeListener(event){
+        let oldState = {...this.state}
+        oldState[event.target.id] = event.target.value
+        this.setState(oldState)
+    }
+
+    onSubmit(){
+        Axios.post('http://localhost:4000/api/customer/addCustomer', this.state)
+        .then(response => {
+            localStorage.setItem("userName", response.data.SUCCESS.name)
+        })
+        .catch(error => console.log(error))
+    }
+
+    render() {
+        return (
+            <div className="login" style={{ marginTop: "50px" }}>
+                <form className="loginForm">
+                    <h3>Register</h3>
+                    <div className="form-group">
+                        <label>Name</label>
+                        <input id="name" type="text" className="form-control" placeholder="Enter Name" onChange= {(event)=> this.onChangeListener(event)}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Address</label>
+                        <input id="address" type="text" className="form-control" placeholder="Enter Address" onChange= {(event)=> this.onChangeListener(event)} />
+                    </div>
+                    <div className="form-group">
+                        <label>Phone No</label>
+                        <input id="phoneNo" type="tel" className="form-control" placeholder="Enter Phone Number" onChange= {(event)=> this.onChangeListener(event)} />
+                    </div>
+                    <div className="form-group">
+                        <label>Email address</label>
+                        <input id="email" type="email" className="form-control" placeholder="Enter email" onChange= {(event)=> this.onChangeListener(event)} />
+                    </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input id="password" type="password" className="form-control" placeholder="Enter password" onChange= {(event)=> this.onChangeListener(event)} />
+                    </div>
+                    <button type="button" onClick={()=> this.onSubmit()} className="btn btn-primary btn-block">Submit</button>
+                </form>
+            </div>
+        )
+    }
 };
 
 export default Register; 

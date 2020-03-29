@@ -9,7 +9,8 @@ class NavBar extends Component {
         HealthCare: [],
         Clothing: [],
         Entertainment: [],
-        subItemActive: false
+        subItemActive: false,
+        loggedIn: false
     }
 
     navItems = ["Electronics", "HealthCare", "Clothing", "Entertainment"]
@@ -28,12 +29,12 @@ class NavBar extends Component {
 
     renderSubCategories = (category) => {
         if (this.state[category].length > 0) {
-            return this.state[category].map(item => 
-            <LinkContainer to={"/product/"+item.name+"/"+item._id} key={item._id}>
-                <NavDropdown.Item  id={item._id} active={this.state.subItemActive}>
-                    {item.name}
-                </NavDropdown.Item>
-            </LinkContainer>)
+            return this.state[category].map(item =>
+                <LinkContainer to={"/product/" + item.name + "/" + item._id} key={item._id}>
+                    <NavDropdown.Item id={item._id} active={this.state.subItemActive}>
+                        {item.name}
+                    </NavDropdown.Item>
+                </LinkContainer>)
         } else {
             return <div>No Items</div>
         }
@@ -44,11 +45,32 @@ class NavBar extends Component {
             {this.renderSubCategories(item)}
         </NavDropdown>)
 
+    logIn = () => {this.setState({loggedIn: true})}
+
+    logOut = () => {
+        localStorage.removeItem('userName')
+        localStorage.removeItem('userId')
+        this.setState({loggedIn: false})
+    }
+
     componentDidMount() {
         this.loadNavSubItems();
     }
 
     render() {
+        let auth = null
+        if(this.state.loggedIn){
+            auth = <NavDropdown title={localStorage.getItem('userName')}>
+                <NavDropdown.Item onClick={() => this.logOut()}>Logout</NavDropdown.Item>
+            </NavDropdown>
+        }else{
+            auth = <LinkContainer to={{
+                pathname: "/login",
+                myProps: {
+                    logIn: this.logIn
+                }
+            }}><Nav.Link>Log In</Nav.Link></LinkContainer> 
+        }
         return (
             <div>
                 <Navbar bg="primary" variant="dark">
@@ -66,7 +88,7 @@ class NavBar extends Component {
                     </Nav>
                     <Nav>
                         <Nav.Link href="#cart"><i className="fas fa-shopping-cart" style={{ fontSize: "1.5rem" }} ></i></Nav.Link>
-                        <LinkContainer  to="/login"><Nav.Link>Log In</Nav.Link></LinkContainer>
+                        {auth}
                     </Nav>
                 </Navbar>
             </div>
