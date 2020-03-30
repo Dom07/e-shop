@@ -6,7 +6,8 @@ import Axios from 'axios';
 class Login extends Component {
     state = {
         emailId: '',
-        password: '' 
+        password: '',
+        inCorrectDetails: false 
     }
 
     onChangeListener(event){
@@ -22,9 +23,16 @@ class Login extends Component {
             localStorage.setItem("userName", response.data.SUCCESS.name)
             localStorage.setItem("userId", response.data.SUCCESS._id)
             this.props.location.myProps.logIn()
-            this.props.history.push('/')
+            if(this.props.location.myProps.from){
+                this.props.history.push(this.props.location.myProps.from)
+            }else{
+                this.props.history.goBack()
+            }
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+            this.setState({inCorrectDetails: true})
+            console.log(error)
+        })
     }
 
     render() {
@@ -32,6 +40,7 @@ class Login extends Component {
             <div className="login">
                 <form className="loginForm">
                     <h3>Sign In</h3>
+                    {this.state.inCorrectDetails? <h6 style={{color:"red"}}>Incorrect username or password.<br></br>Please Try Again.</h6> : null}
                     <div className="form-group">
                         <label>Email address</label>
                         <input id="emailId" type="email" className="form-control" placeholder="Enter email" onChange={(event) => this.onChangeListener(event)}/>

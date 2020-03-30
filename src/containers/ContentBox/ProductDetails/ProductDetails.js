@@ -12,10 +12,29 @@ class ProductDetails extends Component {
         this.loadProduct()
     }
 
-    loadProduct = () => {
+    loadProduct(){
         axios.get("http://localhost:4000/api/product/" + this.props.match.params.id)
             .then(response => this.setState({ product: response.data.SUCCESS }))
             .catch(error => console.log("Error: " + error))
+    }
+
+    onAddToCart(){
+        if(this.props.isLoggedIn){
+            axios.put("http://localhost:4000/api/shoppingCart/add", {
+                product_id: this.state.product._id,
+                customer_id: localStorage.getItem("userId"),
+            })
+            .then(response => console.log(response.data.SUCCESS))
+            .catch(error => console.log(error))
+        }else{
+            console.log(this.props)
+            this.props.history.push({
+                pathname: '/login',
+                myProps: {
+                    logIn: this.props.logIn
+                }
+            })
+        }
     }
 
     renderProduct = () => {
@@ -43,7 +62,7 @@ class ProductDetails extends Component {
                                     <li style={{listStyle:"none"}}><strong>Total Reviews:</strong> 100</li>
                                     <li style={{ color: "red", listStyle: "none" }}>Out of Stock</li>
                                 </Card.Text>
-                                <Button style={{ position: "absolute", bottom: "20px" }}>Add To Cart</Button>
+                                <Button style={{ position: "absolute", bottom: "20px" }} onClick={() => this.onAddToCart()}>Add To Cart</Button>
                                 <Button style={{ position: "absolute", bottom: "20px", left: "150px" }}>Add To Wishlist</Button>
                             </Card.Body>
                         </Card>

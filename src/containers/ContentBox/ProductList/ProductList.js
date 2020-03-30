@@ -10,22 +10,27 @@ class ProductList extends Component {
     }
 
     loadProducts = () => {
-        Axios.get('http://localhost:4000/api/product/getProductBySubCategory/'+this.props.match.params.id)
+        Axios.get('http://localhost:4000/api/product/getProductBySubCategory/' + this.props.match.params.id)
             .then(response => this.setState({ products: response.data.SUCCESS, subCategoryName: this.props.match.params.name }))
             .catch(error => console.log(error))
     }
 
     renderProducts = () => {
-        const totalRows = parseInt(this.state.products.length / 5) + parseInt(this.state.products.length % 5)
-        const productArray = this.state.products;
         let contents = []
-        for (let i = 0; i < totalRows; i++) {
-            const row = <Row key={i}>
-                {this.renderColumns(productArray)}
-            </Row>
-            contents.push(row)
+        if (this.state.products.length > 0) {
+            const totalRows = parseInt(this.state.products.length / 5) + parseInt(this.state.products.length % 5)
+            const productArray = this.state.products;
+            for (let i = 0; i < totalRows; i++) {
+                const row = <Row key={i}>
+                    {this.renderColumns(productArray)}
+                </Row>
+                contents.push(row)
+            }
+            return contents;
+        }else{
+            return <div>No Products Available</div>
         }
-        return contents;
+        
     }
 
     renderColumns = (productArray) => {
@@ -35,6 +40,7 @@ class ProductList extends Component {
                 let item = productArray.shift()
                 let cols = <Col key={item._id}>
                     <ProductThumbNail
+                        id={item._id}
                         name={item.name}
                         price={item.price}
                         key={item._id}
@@ -51,9 +57,9 @@ class ProductList extends Component {
         this.loadProducts()
     }
 
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps) {
         console.log(prevProps)
-        if(prevProps.match.params.name !== this.props.match.params.name){
+        if (prevProps.match.params.name !== this.props.match.params.name) {
             this.loadProducts()
         }
     }

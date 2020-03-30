@@ -4,11 +4,30 @@ import ContextBox from '../ContentBox/ContextBox';
 import Footer from '../../components/Footer/Footer';
 
 class Home extends Component {
+    state = {
+        isLoggedIn: false
+    }
+
+    logIn = () => {this.setState({isLoggedIn: true})}
+
+    logOut = () => {
+        localStorage.removeItem('userName')
+        localStorage.removeItem('userId')
+        this.setState({isLoggedIn: false})
+    }
+
     render() {
         return (
             <div>
-                <Navbar />
-                <ContextBox/>
+                <Navbar 
+                    logIn = {this.logIn}
+                    logOut = {this.logOut}
+                    isLoggedIn = {this.state.isLoggedIn}
+                />
+                <ContextBox
+                    isLoggedIn = {this.state.isLoggedIn}
+                    logIn = {this.logIn}
+                />
                 {/* <Footer/> */}
             </div>
         )

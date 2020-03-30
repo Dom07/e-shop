@@ -10,7 +10,6 @@ class NavBar extends Component {
         Clothing: [],
         Entertainment: [],
         subItemActive: false,
-        loggedIn: false
     }
 
     navItems = ["Electronics", "HealthCare", "Clothing", "Entertainment"]
@@ -45,29 +44,21 @@ class NavBar extends Component {
             {this.renderSubCategories(item)}
         </NavDropdown>)
 
-    logIn = () => {this.setState({loggedIn: true})}
-
-    logOut = () => {
-        localStorage.removeItem('userName')
-        localStorage.removeItem('userId')
-        this.setState({loggedIn: false})
-    }
-
     componentDidMount() {
         this.loadNavSubItems();
     }
 
     render() {
         let auth = null
-        if(this.state.loggedIn){
+        if(this.props.isLoggedIn){
             auth = <NavDropdown title={localStorage.getItem('userName')}>
-                <NavDropdown.Item onClick={() => this.logOut()}>Logout</NavDropdown.Item>
+                <LinkContainer to="/" activeClassName="dropdown-item"><NavDropdown.Item onClick={() => this.props.logOut()}>Logout</NavDropdown.Item></LinkContainer>
             </NavDropdown>
         }else{
             auth = <LinkContainer to={{
                 pathname: "/login",
                 myProps: {
-                    logIn: this.logIn
+                    logIn: this.props.logIn
                 }
             }}><Nav.Link>Log In</Nav.Link></LinkContainer> 
         }
@@ -87,7 +78,7 @@ class NavBar extends Component {
                         </Nav>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="#cart"><i className="fas fa-shopping-cart" style={{ fontSize: "1.5rem" }} ></i></Nav.Link>
+                        <LinkContainer to="/cart"><Nav.Link><i className="fas fa-shopping-cart" style={{ fontSize: "1.5rem" }} ></i>1</Nav.Link></LinkContainer>
                         {auth}
                     </Nav>
                 </Navbar>
