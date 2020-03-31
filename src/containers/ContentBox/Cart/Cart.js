@@ -28,7 +28,7 @@ class Cart extends Component {
                 this.setState({
                 shoppingCartId: shoppingCartId,
                 products: products,
-                cartTotal: cartTotal})
+                cartTotal: cartTotal.toFixed(2)})
             })
             .catch(error => console.log(error))
     }
@@ -62,7 +62,8 @@ class Cart extends Component {
                         quantity={product.quantity}
                         price={product.productId.price}
                         removeProduct={this.removeProduct}
-                        updateQuantity={this.updateQuantity} />
+                        updateQuantity={this.updateQuantity}
+                        inCart={true} />
             )
         } else {
             return <div>No Items Available In Cart</div>

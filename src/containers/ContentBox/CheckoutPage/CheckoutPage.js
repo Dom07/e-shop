@@ -12,7 +12,8 @@ class Checkout extends Component {
         cardHolderName: "",
         cardNumber: "",
         expiryDate: "",
-        CVV: ""
+        CVV: "",
+        customer_id: localStorage.getItem("userId")
     }
 
     onChangeListener(event){
@@ -61,6 +62,7 @@ class Checkout extends Component {
     placeOrder = () => {
         Axios.post("http://localhost:4000/api/order/placeOrder", this.state)
         .then(response => {
+            console.log(response.data)
             if(response.data.SUCCESS){
                 this.props.history.push("/orders")
             }else{
@@ -80,7 +82,7 @@ class Checkout extends Component {
                 <div style={{ marginTop: "20px" }}>
                     <h3>Checkout Page</h3>
                     {this.renderProducts()}
-                    <h5 style={{ marginTop: "10px" }}>Cart Total: ${this.state.cartTotal}</h5>
+                    <h5 style={{ marginTop: "10px" }}>Cart Total: ${this.state.totalPrice}</h5>
                     <Card style={{ padding: "10px" }}>
                         <Card.Title>Shipping Address:</Card.Title>
                         <Card.Text>{localStorage.getItem("userAddress")}</Card.Text>

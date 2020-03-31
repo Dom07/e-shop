@@ -9,6 +9,7 @@ import Register from './RegisterPage/Register';
 import Cart from './Cart/Cart';
 import Checkout from './CheckoutPage/CheckoutPage';
 import Orders from './Orders/Orders';
+import WriteReview from './WriteReview/WriteReview';
 
 class ContextBox extends Component {
     state = {
@@ -109,6 +110,27 @@ class ContextBox extends Component {
                                 )
                         }
                     />
+
+                    <Route
+                        exact
+                        path="/writeReview/:product_id"
+                        render={(props) =>
+                            localStorage.getItem('userName') ? (
+                                <WriteReview {...props} />
+                            ) : (
+                                    <Redirect to={{
+                                        pathname: "/login",
+                                        myProps: {
+                                            logIn: this.props.logIn,
+                                            from: "/orders"
+                                        }
+                                    }
+                                    } />
+                                )
+                        }
+                    />
+
+
                 </Switch>
             </Container>)
     }

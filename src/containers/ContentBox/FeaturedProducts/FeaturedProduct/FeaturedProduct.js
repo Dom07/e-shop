@@ -17,7 +17,7 @@ class FeaturedProduct extends Component {
         let products = null
         if (this.state.products) {
             if(this.state.products.length > 0){
-                products = <ProductThumbNails products={this.state.products} />        
+                products = <ProductThumbNails products={this.state.products.slice(0, 5)} />        
             }else{
                 products = <div>No Products found</div>
             }

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const renderQuantity = (quantity) => {
     if (quantity >= 10) {
@@ -13,7 +14,7 @@ const renderQuantity = (quantity) => {
 
 const ProductCard = (props) => {
     return (
-        <div style={{ display: "flex", height: "120px", border: "1px solid rgba(0,0,0,.125)", borderRadius: ".25rem", marginTop: "10px" }}>
+        <div style={{ display: "flex", height: "120px", border: "1px solid rgba(0,0,0,.125)", borderRadius: ".25rem", marginBottom: "10px" }}>
             <div>
                 <img src={props.img} style={{ height: "100px", width: "100px", objectFit: "contain", padding: "10px" }} />
             </div>
@@ -22,12 +23,20 @@ const ProductCard = (props) => {
                 <span>Price: ${props.price}</span>
                 <div style={{ display: "flex", marginTop: "5px" }}>
                     <span>Quantity: </span>
-                    {(props.checkout) ? (<span> 1</span>): (<span style={{ marginLeft: "10px" }}>
+                    {(props.checkout || props.orders) ? (<span> 1</span>): null}
+                    {(props.inCart) ? (<span style={{ marginLeft: "10px" }}>
                         <Form.Control size="sm" as="select" value={props.quantity} onChange={(event) => props.updateQuantity(props.id, event)}>
                             {renderQuantity(props.totalQuantity)}
                         </Form.Control>
-                    </span>)}
-                    {(props.checkout)? null : (<div style={{ marginLeft: "auto", color: "red", cursor: "pointer" }} onClick={() => props.removeProduct(props.id)}>Remove Item</div>)}
+                    </span>): null}
+                    {(props.orders) ? (<LinkContainer to={{
+                        pathname:"/writeReview/"+props.id,
+                        state: {
+                            name: props.name
+                        }
+                    }}
+                        style={{ marginLeft: "auto" }}><Button >Write Review</Button></LinkContainer>): null }
+                    {(props.inCart) ? (<div style={{ marginLeft: "auto", color: "red", cursor: "pointer" }} onClick={() => props.removeProduct(props.id)}>Remove Item</div>): null}
                 </div>
             </div>
         </div>
