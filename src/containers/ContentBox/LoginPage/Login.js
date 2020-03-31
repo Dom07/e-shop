@@ -22,6 +22,7 @@ class Login extends Component {
             console.log(response.data)
             localStorage.setItem("userName", response.data.SUCCESS.name)
             localStorage.setItem("userId", response.data.SUCCESS._id)
+            localStorage.setItem("userAddress", response.data.SUCCESS.address)
             this.props.location.myProps.logIn()
             if(this.props.location.myProps.from){
                 this.props.history.push(this.props.location.myProps.from)

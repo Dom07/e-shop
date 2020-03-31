@@ -7,6 +7,8 @@ import ProductList from './ProductList/ProductList';
 import Login from './LoginPage/Login';
 import Register from './RegisterPage/Register';
 import Cart from './Cart/Cart';
+import Checkout from './CheckoutPage/CheckoutPage';
+import Orders from './Orders/Orders';
 
 class ContextBox extends Component {
     state = {
@@ -26,7 +28,7 @@ class ContextBox extends Component {
                         path="/"
                         component={FeaturedProducts}
                     />
-                    
+
                     <Route
                         exact
                         path="/login"
@@ -36,13 +38,13 @@ class ContextBox extends Component {
                     <Route
                         exact
                         path="/register"
-                        component={Register}
+                        render={props => <Register {...props} {...this.props} />}
                     />
 
                     <Route
                         exact
                         path="/product/:id"
-                        render={props => <ProductDetails {...props} isLoggedIn={this.props.isLoggedIn} logIn={this.props.logIn}/>}
+                        render={props => <ProductDetails {...props} isLoggedIn={this.props.isLoggedIn} logIn={this.props.logIn} />}
                     />
 
                     <Route
@@ -55,7 +57,7 @@ class ContextBox extends Component {
                         exact
                         path="/cart"
                         render={() =>
-                            this.props.isLoggedIn ? (
+                            localStorage.getItem('userName') ? (
                                 <Cart />
                             ) : (
                                     <Redirect to={{
@@ -63,6 +65,44 @@ class ContextBox extends Component {
                                         myProps: {
                                             logIn: this.props.logIn,
                                             from: "/cart"
+                                        }
+                                    }
+                                    } />
+                                )
+                        }
+                    />
+
+                    <Route
+                        exact
+                        path="/checkout"
+                        render={(props) =>
+                            localStorage.getItem('userName') ? (
+                                <Checkout {...props} />
+                            ) : (
+                                    <Redirect to={{
+                                        pathname: "/login",
+                                        myProps: {
+                                            logIn: this.props.logIn,
+                                            from: "/cart"
+                                        }
+                                    }
+                                    } />
+                                )
+                        }
+                    />
+
+                    <Route
+                        exact
+                        path="/orders"
+                        render={(props) =>
+                            localStorage.getItem('userName') ? (
+                                <Orders {...props} />
+                            ) : (
+                                    <Redirect to={{
+                                        pathname: "/login",
+                                        myProps: {
+                                            logIn: this.props.logIn,
+                                            from: "/orders"
                                         }
                                     }
                                     } />

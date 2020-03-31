@@ -24,7 +24,15 @@ class ProductDetails extends Component {
                 product_id: this.state.product._id,
                 customer_id: localStorage.getItem("userId"),
             })
-            .then(response => console.log(response.data.SUCCESS))
+            .then(response => {
+                if(response.data.SUCCESS){
+                    this.props.history.push({
+                        pathname: '/cart'
+                    })
+                }else{
+                    console.log("ERROR: error while adding to cart")
+                }
+            })
             .catch(error => console.log(error))
         }else{
             console.log(this.props)

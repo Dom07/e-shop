@@ -16,6 +16,12 @@ class Home extends Component {
         this.setState({isLoggedIn: false})
     }
 
+    componentDidMount(){
+        if(localStorage.getItem('userName')){
+            this.setState({isLoggedIn: true})
+        }
+    }
+
     render() {
         return (
             <div>
