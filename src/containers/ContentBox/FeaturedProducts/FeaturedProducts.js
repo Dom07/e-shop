@@ -19,7 +19,7 @@ class FeaturedProducts extends Component {
         return (
             <div style={{ marginTop: "20px" }}>
                 <FeaturedProduct name="Electronics"/>
-                <FeaturedProduct name="Health Care"/>
+                <FeaturedProduct name="HealthCare"/>
                 <FeaturedProduct name="Clothing"/>
                 <FeaturedProduct name="Entertainment"/>
             </div>

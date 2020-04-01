@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 const ProductThumbNail = (props) => {
   return (
-    <Card style={{ width: '15rem' }}>
+    <Card style={{ width: '15rem', marginBottom: "20px" }}>
       <Card.Img variant="top" src={props.image} style={{height: "200px", objectFit: "contain", padding: "10px"}}/>
       <Card.Body>
         <Card.Title style={{ margin: "0px" }}>{props.name}</Card.Title>

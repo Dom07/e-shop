@@ -39,7 +39,7 @@ class Orders extends Component {
                 </Card>
             )
         } else {
-            return (<div>No Products found</div>)
+            return (<div>No Past Orders Available</div>)
         }
     }
 
