@@ -27,18 +27,19 @@ class ProductList extends Component {
                 contents.push(row)
             }
             return contents;
-        }else{
+        } else {
             return <div>No Products Available</div>
         }
-        
+
     }
 
     renderColumns = (productArray) => {
         let contents = []
-        for (let i = 0; i <= 5; i++) {
-            if (productArray.length > 0) {
-                let item = productArray.shift()
-                let cols = <Col key={item._id}>
+        for (let i = 0; i < 5; i++) {
+            let item = productArray.shift()
+            let cols = <Col key={i}/>
+            if (item) {
+                cols = <Col key={item._id}>
                     <ProductThumbNail
                         id={item._id}
                         name={item.name}
@@ -47,8 +48,8 @@ class ProductList extends Component {
                         image={item.image}
                     />
                 </Col>
-                contents.push(cols)
             }
+            contents.push(cols)
         }
         return contents;
     }

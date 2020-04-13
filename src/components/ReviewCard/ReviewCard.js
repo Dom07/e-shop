@@ -4,7 +4,7 @@ import {Card} from 'react-bootstrap';
 const renderStars = (rating) => {
     let content = []
     for(var i = 0; i< rating; i++){
-        content.push(<i className="fas fa-star" style={{color: "#fd7e14"}}></i>)
+        content.push(<i className="fas fa-star" key={i} style={{color: "#fd7e14"}}></i>)
     }
     return content
 }

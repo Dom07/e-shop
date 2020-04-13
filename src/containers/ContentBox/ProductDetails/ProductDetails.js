@@ -14,6 +14,7 @@ class ProductDetails extends Component {
         if (this.state.reviews.length > 0) {
             return this.state.reviews.map(review =>
                 <ReviewCard
+                    key={review._id}
                     rating={review.rating}
                     description={review.description}
                     name={review.customerId.name}
@@ -62,6 +63,14 @@ class ProductDetails extends Component {
         }
     }
 
+    renderStars(size){
+        let stars = []
+        for(let i = 0; i<size; i++){
+            stars.push(<i className="fas fa-star" key={i} style={{color: "#fd7e14"}}></i>)
+        }
+        return stars
+    }
+
     componentDidMount() {
         this.loadProduct()
     }
@@ -87,7 +96,7 @@ class ProductDetails extends Component {
                                 </Card.Text>
                                 <Card.Text>
                                     <li style={{ listStyle: "none" }}><strong>Product Price:</strong> ${this.state.product.price}</li>
-                                    <li style={{ listStyle: "none" }}><strong>Product Rating:</strong> ******</li>
+                                    <li style={{ listStyle: "none" }}><strong>Product Rating:</strong> {this.renderStars(5)}</li>
                                     <li style={{ listStyle: "none" }}><strong>Total Reviews:</strong> 100</li>
                                     {/* <li style={{ color: "red", listStyle: "none" }}>Out of Stock</li> */}
                                 </Card.Text>
@@ -108,7 +117,6 @@ class ProductDetails extends Component {
             return (<div>Loading...</div>)
         }
     }
-
 
     render() {
         return (
