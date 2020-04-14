@@ -7,7 +7,7 @@ import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 class ProductDetails extends Component {
     state = {
         product: null,
-        reviews: null
+        reviews: null,
     }
 
     renderReview = () => {
@@ -71,6 +71,14 @@ class ProductDetails extends Component {
         return stars
     }
 
+    checkInStock(){
+        if(this.state.product.quantity > 0){
+            return false
+        }else{
+            return true
+        }
+    }
+
     componentDidMount() {
         this.loadProduct()
     }
@@ -98,10 +106,9 @@ class ProductDetails extends Component {
                                     <li style={{ listStyle: "none" }}><strong>Product Price:</strong> ${this.state.product.price}</li>
                                     <li style={{ listStyle: "none" }}><strong>Product Rating:</strong> {this.renderStars(5)}</li>
                                     <li style={{ listStyle: "none" }}><strong>Total Reviews:</strong> 100</li>
-                                    {/* <li style={{ color: "red", listStyle: "none" }}>Out of Stock</li> */}
+                                    {this.checkInStock() ? (<li style={{ color: "red", listStyle: "none" }}>Out of Stock</li>) : null}
                                 </Card.Text>
-                                <Button style={{ position: "absolute", bottom: "20px" }} onClick={() => this.onAddToCart()}>Add To Cart</Button>
-                                <Button style={{ position: "absolute", bottom: "20px", left: "150px" }}>Add To Wishlist</Button>
+                                <Button style={{ position: "absolute", bottom: "20px" }} onClick={() => this.onAddToCart()} disabled={this.checkInStock()}>Add To Cart</Button>
                             </Card.Body>
                         </Card>
                     </Col>
