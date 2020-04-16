@@ -4,9 +4,19 @@ import { Link } from 'react-router-dom';
 
 const renderStars = (size) => {
   let stars = []
-  for (let i = 0; i < size; i++) {
-    stars.push(<i className="fas fa-star" key={i} style={{ color: "#fd7e14" }}></i>)
+  if (size > 0) {
+    for (let i = 0; i < size; i++) {
+      stars.push(<i className="fas fa-star" key={i} style={{ color: "#fd7e14", WebkitTextStroke: "1px #fd7e14" }}></i>)
+    }
+    for (let i = 0; i < 5 - size; i++) {
+      stars.push(<i className="fas fa-star" key={i} style={{ color: "white", WebkitTextStroke: "1px #fd7e14" }}></i>)
+    }
+  } else {
+    for (let i = 0; i < 5; i++) {
+      stars.push(<i className="fas fa-star" key={i} style={{ color: "white", WebkitTextStroke: "1px #fd7e14" }}></i>)
+    }
   }
+
   return stars
 }
 
@@ -18,7 +28,7 @@ const ProductThumbNail = (props) => {
         <Card.Title style={{ margin: "0px" }}>{props.name}</Card.Title>
         <Card.Text style={{ margin: "0px" }}>
           <span>Ratings: </span>
-          <span>{renderStars(5)}</span>
+          <span>{renderStars(props.ratings)}</span>
         </Card.Text>
         <Card.Text style={{ margin: "0px" }}>
           <span>Price: </span>

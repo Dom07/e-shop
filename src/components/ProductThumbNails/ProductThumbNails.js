@@ -10,7 +10,8 @@ const renderProducts = (products) =>{
                 name={product.name} 
                 price={product.price} 
                 key={product._id}
-                image={product.image[0]}/>
+                image={product.image[0]}
+                ratings={product.ratings}/>
             </Col>)
     }
     else{

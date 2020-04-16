@@ -63,11 +63,16 @@ class ProductDetails extends Component {
         }
     }
 
-    renderStars(size){
+    renderStars(){
         let stars = []
-        for(let i = 0; i<size; i++){
-            stars.push(<i className="fas fa-star" key={i} style={{color: "#fd7e14"}}></i>)
+        if(this.state.product.ratings > 0){
+            for(let i = 0; i < this.state.product.ratings; i++){
+                stars.push(<i className="fas fa-star" key={i} style={{color: "#fd7e14"}}></i>)
+            }
+        }else{
+            stars = "No Ratings Yet"
         }
+        
         return stars
     }
 

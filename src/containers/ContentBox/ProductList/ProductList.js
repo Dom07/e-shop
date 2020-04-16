@@ -46,6 +46,7 @@ class ProductList extends Component {
                         price={item.price}
                         key={item._id}
                         image={item.image}
+                        ratings={item.ratings}
                     />
                 </Col>
             }
