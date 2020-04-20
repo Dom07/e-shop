@@ -28,7 +28,7 @@ const ProductThumbNail = (props) => {
         <Card.Title style={{ margin: "0px" }}>{props.name}</Card.Title>
         <Card.Text style={{ margin: "0px" }}>
           <span>Ratings: </span>
-          <span>{renderStars(props.ratings)}</span>
+          <span>{renderStars(Math.floor(props.ratings))}</span>
         </Card.Text>
         <Card.Text style={{ margin: "0px" }}>
           <span>Price: </span>
