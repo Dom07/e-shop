@@ -10,6 +10,7 @@ import Cart from './Cart/Cart';
 import Checkout from './CheckoutPage/CheckoutPage';
 import Orders from './Orders/Orders';
 import WriteReview from './WriteReview/WriteReview';
+import AddProduct from './AddProduct/AddProduct';
 
 class ContextBox extends Component {
     state = {
@@ -128,6 +129,12 @@ class ContextBox extends Component {
                                     } />
                                 )
                         }
+                    />
+
+                    <Route
+                        exact
+                        path="/addNewProduct"
+                        component={AddProduct}
                     />
 
 

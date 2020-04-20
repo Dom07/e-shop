@@ -12,7 +12,7 @@ class NavBar extends Component {
         subItemActive: false,
     }
 
-    navItems = ["Electronics", "HealthCare", "Clothing", "Entertainment"]
+    navItems = ["Electronics", "Clothing", "Entertainment"]
 
     loadNavSubItems = () => {
         this.navItems.forEach(item => {

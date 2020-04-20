@@ -21,6 +21,8 @@ class WriteReview extends Component {
         .then(response => {
             if(response.data.SUCCESS){
                 this.props.history.push("/orders")
+            }else{
+                console.log(response.data)
             }
         })
     }
